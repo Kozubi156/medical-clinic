@@ -18,13 +18,13 @@ public class PatientController {
     private final PatientService patientService;
 
     @PostMapping("/patients")
-    public ResponseEntity<Patient> registerPatient(@RequestBody PatientDTO patient) {
+    public ResponseEntity<PatientDTO> registerPatient(@RequestBody PatientDTO patient) {
         patientService.registerPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/patients/{pesel}")
-    public ResponseEntity<Patient> registerPatient(@PathVariable int pesel, @RequestBody Patient patient) {
+    public ResponseEntity<PatientDTO> registerPatient(@PathVariable Long pesel, @RequestBody PatientDTO patient) {
         patientService.updatePatient(pesel, patient);
         return ResponseEntity.status(HttpStatus.OK).body(patient);
     }
@@ -32,12 +32,16 @@ public class PatientController {
 
     @GetMapping("/patients")
     public ResponseEntity<List<Patient>> getAllPatients() {
-        patientService.getAllPatients();
         return ResponseEntity.status(HttpStatus.OK).body(patientService.getAllPatients());
     }
 
+    @GetMapping("/patients/{pesel}")
+    public ResponseEntity<Patient> getPatientByPESEL(@PathVariable Long pesel) {
+        return ResponseEntity.status(HttpStatus.OK).body(patientService.getPatientsByPESEL(pesel));
+    }
+
     @DeleteMapping("/patients/{pesel}")
-    public ResponseEntity<Patient> deletePatient(@PathVariable int pesel) {
+    public ResponseEntity<Void> deletePatient(@PathVariable Long pesel) {
         patientService.deletePatient(pesel);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

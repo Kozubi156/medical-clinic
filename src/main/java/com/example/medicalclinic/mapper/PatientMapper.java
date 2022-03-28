@@ -9,6 +9,6 @@ import org.mapstruct.Mapper;
 
 public interface PatientMapper {
 
-    Patient map(PatientDTO patientDTO);
+    Patient patientDTOtoPatient(PatientDTO patientDTO);
 
 }

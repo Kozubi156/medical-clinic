@@ -21,6 +21,7 @@ target/
 *.ipr
 out
 test-output
+frontend
 
 ### NetBeans ###
 /nbproject/private/
