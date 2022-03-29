@@ -6,11 +6,14 @@ import com.example.medicalclinic.service.PatientServiceImp;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Data
+@Validated
 @RestController
 @RequestMapping("/medical-clinic")
 public class PatientController {
@@ -18,7 +21,7 @@ public class PatientController {
     private final PatientServiceImp patientServiceImp;
 
     @PostMapping("/patients")
-    public ResponseEntity<Patient> registerPatient(@RequestBody PatientDTO patient) {
+    public ResponseEntity<Patient> registerPatient(@RequestBody @Valid PatientDTO patient) {
         patientServiceImp.registerPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -28,7 +31,6 @@ public class PatientController {
         patientServiceImp.updatePatient(pesel, patient);
         return ResponseEntity.status(HttpStatus.OK).body(patientServiceImp.getPatientsByPESEL(pesel));
     }
-
 
     @GetMapping("/patients")
     public ResponseEntity<List<Patient>> getAllPatients() {

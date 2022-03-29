@@ -21,7 +21,6 @@ target/
 *.ipr
 out
 test-output
-frontend
 
 ### NetBeans ###
 /nbproject/private/
@@ -35,3 +34,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/frontend/

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+
 @Entity
 @Data
 public class Patient {
@@ -15,7 +16,4 @@ public class Patient {
     private Long pesel;
     private Long phoneNumber;
     private String comment;
-
-//    @Column(columnDefinition = "BIGINT(20) NOT NULL UNIQUE KEY auto_increment")
-    private int Id;
 }

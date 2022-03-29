@@ -2,15 +2,21 @@ package com.example.medicalclinic.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 @Data
 public class PatientDTO {
 
     @NotEmpty
     private String firstName;
+
+    @NotEmpty
     private String surname;
-    private long pesel;
+
+    @NotNull
+    private Long pesel;
+
+    @NotNull
     private int phoneNumber;
     private String comment;
 }
