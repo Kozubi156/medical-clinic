@@ -2,7 +2,7 @@ package com.example.medicalclinic.controller;
 
 import com.example.medicalclinic.dto.PatientDTO;
 import com.example.medicalclinic.model.Patient;
-import com.example.medicalclinic.service.PatientService;
+import com.example.medicalclinic.service.PatientServiceImp;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,34 +15,34 @@ import java.util.List;
 @RequestMapping("/medical-clinic")
 public class PatientController {
 
-    private final PatientService patientService;
+    private final PatientServiceImp patientServiceImp;
 
     @PostMapping("/patients")
-    public ResponseEntity<PatientDTO> registerPatient(@RequestBody PatientDTO patient) {
-        patientService.registerPatient(patient);
+    public ResponseEntity<Patient> registerPatient(@RequestBody PatientDTO patient) {
+        patientServiceImp.registerPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/patients/{pesel}")
-    public ResponseEntity<PatientDTO> registerPatient(@PathVariable Long pesel, @RequestBody PatientDTO patient) {
-        patientService.updatePatient(pesel, patient);
-        return ResponseEntity.status(HttpStatus.OK).body(patient);
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long pesel, @RequestBody Patient patient) {
+        patientServiceImp.updatePatient(pesel, patient);
+        return ResponseEntity.status(HttpStatus.OK).body(patientServiceImp.getPatientsByPESEL(pesel));
     }
 
 
     @GetMapping("/patients")
     public ResponseEntity<List<Patient>> getAllPatients() {
-        return ResponseEntity.status(HttpStatus.OK).body(patientService.getAllPatients());
+        return ResponseEntity.status(HttpStatus.OK).body(patientServiceImp.getAllPatients());
     }
 
     @GetMapping("/patients/{pesel}")
     public ResponseEntity<Patient> getPatientByPESEL(@PathVariable Long pesel) {
-        return ResponseEntity.status(HttpStatus.OK).body(patientService.getPatientsByPESEL(pesel));
+        return ResponseEntity.status(HttpStatus.OK).body(patientServiceImp.getPatientsByPESEL(pesel));
     }
 
     @DeleteMapping("/patients/{pesel}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long pesel) {
-        patientService.deletePatient(pesel);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        patientServiceImp.deletePatient(pesel);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

@@ -5,17 +5,17 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "patients")
 @Data
 public class Patient {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
     private String firstName;
     private String surname;
-    private long pesel;
-    private int phoneNumber;
+    @Id
+    @Column(unique = true)
+    private Long pesel;
+    private Long phoneNumber;
     private String comment;
 
+//    @Column(columnDefinition = "BIGINT(20) NOT NULL UNIQUE KEY auto_increment")
+    private int Id;
 }
