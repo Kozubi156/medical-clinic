@@ -1,7 +1,7 @@
 package com.example.medicalclinic.exception;
 
-public class PatientNotFoundException extends RuntimeException{
-    public PatientNotFoundException(String message) {
+public class PatienException extends RuntimeException{
+    public PatienException(String message) {
         super(message);
     }
 }

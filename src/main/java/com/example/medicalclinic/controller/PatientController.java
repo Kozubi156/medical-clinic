@@ -21,13 +21,13 @@ public class PatientController {
     private final PatientServiceImp patientServiceImp;
 
     @PostMapping("/patients")
-    public ResponseEntity<Patient> registerPatient(@RequestBody @Valid PatientDTO patient) {
-        patientServiceImp.registerPatient(patient);
+    public ResponseEntity<Patient> registerPatient(@RequestBody @Valid PatientDTO patientDTO) {
+        patientServiceImp.registerPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/patients/{pesel}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long pesel, @RequestBody Patient patient) {
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long pesel, @RequestBody Patient patient)   {
         patientServiceImp.updatePatient(pesel, patient);
         return ResponseEntity.status(HttpStatus.OK).body(patientServiceImp.getPatientsByPESEL(pesel));
     }

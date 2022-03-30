@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 @Data
 public class PatientDTO {
 
-    @NotEmpty
+    @NotEmpty(message = "Name should be set")
     private String firstName;
 
     @NotEmpty
