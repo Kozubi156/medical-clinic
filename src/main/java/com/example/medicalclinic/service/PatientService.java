@@ -9,7 +9,7 @@ public interface PatientService {
 
     Patient registerPatient(PatientDTO patientDTO);
 
-    void updatePatient(Long pesel, Patient patient);
+    void updatePatient(Long pesel, PatientDTO patientDTO);
 
     List<Patient> getAllPatients();
 

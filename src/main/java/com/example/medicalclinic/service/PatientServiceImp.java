@@ -27,13 +27,13 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public void updatePatient(Long pesel, Patient patient) {
+    public void updatePatient(Long pesel, PatientDTO patientDTO) {
         if (patientRepository.existsById(pesel)) {
             Patient registeredPatient = patientRepository.findById(pesel).get();
-            registeredPatient.setFirstName(patient.getFirstName());
-            registeredPatient.setSurname(patient.getSurname());
-            registeredPatient.setComment(patient.getComment());
-            registeredPatient.setPhoneNumber(patient.getPhoneNumber());
+            registeredPatient.setFirstName(patientDTO.getFirstName());
+            registeredPatient.setSurname(patientDTO.getSurname());
+            registeredPatient.setComment(patientDTO.getComment());
+            registeredPatient.setPhoneNumber(patientDTO.getPhoneNumber());
             patientRepository.save(registeredPatient);
         } else {
             throw new PatienException("No patient with PESEL: "+ pesel +" was found");

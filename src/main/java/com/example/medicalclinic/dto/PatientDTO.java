@@ -17,6 +17,6 @@ public class PatientDTO {
     private Long pesel;
 
     @NotNull
-    private int phoneNumber;
+    private Long phoneNumber;
     private String comment;
 }
