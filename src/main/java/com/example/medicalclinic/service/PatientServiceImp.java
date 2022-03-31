@@ -17,11 +17,10 @@ public class PatientServiceImp implements PatientService {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
-
     @Override
     public Patient registerPatient(PatientDTO patientDTO) {
-        if (patientRepository.findById(patientDTO.getPesel()).isPresent()) {
-            throw new PatienException("Patient already exist");
+        if (patientRepository.existsById(patientDTO.getPesel())) {
+            throw new PatienException("Patient with PESEL: " + patientDTO.getPesel() + "is already registered");
         }
         Patient patient = patientMapper.mapPatientDTOtoPatient(patientDTO);
         return patientRepository.save(patient);
@@ -29,7 +28,7 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public void updatePatient(Long pesel, Patient patient) {
-        if (patientRepository.findById(pesel).isPresent()) {
+        if (patientRepository.existsById(pesel)) {
             Patient registeredPatient = patientRepository.findById(pesel).get();
             registeredPatient.setFirstName(patient.getFirstName());
             registeredPatient.setSurname(patient.getSurname());
@@ -37,7 +36,7 @@ public class PatientServiceImp implements PatientService {
             registeredPatient.setPhoneNumber(patient.getPhoneNumber());
             patientRepository.save(registeredPatient);
         } else {
-            throw new PatienException("No patient founded");
+            throw new PatienException("No patient with PESEL: "+ pesel +" was found");
         }
     }
 
@@ -48,7 +47,8 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient getPatientsByPESEL(Long pesel) {
-        return patientRepository.findById(pesel).get();
+        return patientRepository.findById(pesel).orElseThrow(() -> new PatienException("No patient founded with " +
+                "PESEL: " + pesel));
     }
 
     @Override
