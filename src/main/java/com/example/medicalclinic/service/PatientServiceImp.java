@@ -20,7 +20,7 @@ public class PatientServiceImp implements PatientService {
     @Override
     public Patient registerPatient(PatientDTO patientDTO) {
         if (patientRepository.existsById(patientDTO.getPesel())) {
-            throw new PatienException("Patient with PESEL: " + patientDTO.getPesel() + "is already registered");
+            throw new PatienException("Patient with PESEL: " + patientDTO.getPesel() + " is already registered");
         }
         Patient patient = patientMapper.mapPatientDTOtoPatient(patientDTO);
         return patientRepository.save(patient);
@@ -36,7 +36,7 @@ public class PatientServiceImp implements PatientService {
             registeredPatient.setPhoneNumber(patientDTO.getPhoneNumber());
             patientRepository.save(registeredPatient);
         } else {
-            throw new PatienException("No patient with PESEL: "+ pesel +" was found");
+            throw new PatienException("Patient with PESEL: " + pesel + " not found");
         }
     }
 
@@ -47,12 +47,18 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient getPatientsByPESEL(Long pesel) {
-        return patientRepository.findById(pesel).orElseThrow(() -> new PatienException("No patient founded with " +
-                "PESEL: " + pesel));
+        return patientRepository.findById(pesel).orElseThrow(() -> new PatienException("Patient with PESEL: " + pesel +
+                " " +
+                "not found"));
     }
+
 
     @Override
     public void deletePatient(Long pesel) {
-        patientRepository.deleteById(pesel);
+        if (patientRepository.findById(pesel).isPresent()) {
+            patientRepository.deleteById(pesel);
+        } else {
+            throw new PatienException("Patient with PESEL: " + pesel + " not found");
+        }
     }
 }

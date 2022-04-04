@@ -13,7 +13,7 @@ public interface PatientService {
 
     List<Patient> getAllPatients();
 
-    Patient getPatientsByPESEL(Long pesel);
+   Patient getPatientsByPESEL(Long pesel);
 
     void deletePatient(Long pesel);
 
